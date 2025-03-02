@@ -5,7 +5,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="w-full bg-white shadow-sm">
+    <nav className="w-full bg-white shadow-sm ingredients">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between p-4">
         <div className="flex items-center space-x-3">
           <img
