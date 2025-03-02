@@ -48,7 +48,7 @@ export default function SignIn() {
               className="w-full p-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#3D5122] text-gray-900"
               required
             />
-          </div>
+          </div>6
 
           {/* Sign In Button */}
           <button
