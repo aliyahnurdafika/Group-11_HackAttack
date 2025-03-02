@@ -4,6 +4,7 @@ import FoodSearching from "./FoodSearching";
 import Restriction from "./Restriction";
 import Navbar from "./Navbar";
 import Ingredients from "./Ingredients.jsx";
+import SignIn from "./SignIn.jsx";
 
 export default function App() {
   return (
@@ -11,10 +12,7 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route
-          path="/login"
-          element={<div>this is supposed to be login page</div>}
-        />
+        <Route path="/login" element={<SignIn />} />
         <Route path="/restriction" element={<Restriction />} />
         <Route path="/ingredients" element={<Ingredients />} />
       </Routes>
