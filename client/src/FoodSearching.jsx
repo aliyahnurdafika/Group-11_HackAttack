@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
-export default function FoodSearching() {
+export default function App() {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [recipeTitles, setRecipeTitles] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -13,23 +13,129 @@ export default function FoodSearching() {
   const location = useLocation();
   const { restrictions, allergies } = location.state || {};
 
-  const availableIngredients = [
-    "Chicken",
-    "Garlic",
-    "Butter",
-    "Mushroom",
-    "Salmon",
-    "Pasta",
-    "Lemon",
-    "Herbs",
-    "Rice",
-    "Tomato",
-    "Cheese",
-    "Onion",
-    "Carrot",
-  ];
+  const categorizedIngredients = {
+    Carbs: [
+      "Rice",
+      "Pasta",
+      "Bread",
+      "Potato",
+      "Oats",
+      "Quinoa",
+      "Corn",
+      "Barley",
+      "Couscous",
+      "Sweet Potato",
+    ],
+    Proteins: [
+      "Chicken",
+      "Beef",
+      "Pork",
+      "Salmon",
+      "Tuna",
+      "Eggs",
+      "Tofu",
+      "Lentils",
+      "Chickpeas",
+      "Shrimp",
+      "Turkey",
+      "Duck",
+      "Crab",
+      "Lamb",
+    ],
+    Vegetables: [
+      "Tomato",
+      "Carrot",
+      "Broccoli",
+      "Spinach",
+      "Mushroom",
+      "Lettuce",
+      "Cabbage",
+      "Zucchini",
+      "Cauliflower",
+      "Bell Pepper",
+      "Eggplant",
+      "Green Beans",
+      "Peas",
+      "Radish",
+      "Beetroot",
+      "Asparagus",
+      "Leeks",
+      "Pumpkin",
+    ],
+    Fruits: [
+      "Apple",
+      "Banana",
+      "Orange",
+      "Strawberry",
+      "Blueberry",
+      "Mango",
+      "Pineapple",
+      "Grapes",
+      "Watermelon",
+      "Avocado",
+      "Peach",
+      "Pear",
+      "Kiwi",
+      "Cherry",
+      "Papaya",
+    ],
+    Spices: [
+      "Garlic",
+      "Onion",
+      "Black Pepper",
+      "Salt",
+      "Cumin",
+      "Turmeric",
+      "Cinnamon",
+      "Ginger",
+      "Paprika",
+      "Chili Powder",
+      "Nutmeg",
+      "Cardamom",
+      "Cloves",
+      "Bay Leaf",
+      "Oregano",
+      "Basil",
+      "Rosemary",
+      "Thyme",
+    ],
+    Dairy: [
+      "Cheese",
+      "Milk",
+      "Yogurt",
+      "Butter",
+      "Cream",
+      "Mozzarella",
+      "Parmesan",
+      "Feta",
+      "Cottage Cheese",
+      "Sour Cream",
+    ],
+    Oils: [
+      "Olive Oil",
+      "Vegetable Oil",
+      "Coconut Oil",
+      "Butter",
+      "Sesame Oil",
+      "Avocado Oil",
+      "Canola Oil",
+      "Peanut Oil",
+    ],
+    Condiments: [
+      "Soy Sauce",
+      "Ketchup",
+      "Mayonnaise",
+      "Mustard",
+      "Vinegar",
+      "BBQ Sauce",
+      "Hot Sauce",
+      "Honey",
+      "Maple Syrup",
+      "Worcestershire Sauce",
+    ],
+  };
 
-  async function handleIngredientSelect(event, index) {
+  function handleIngredientSelect(event, index) {
     const selected = event.target.value;
     if (selected && !selectedIngredients.includes(selected)) {
       const newIngredients = [...selectedIngredients];
@@ -96,7 +202,6 @@ export default function FoodSearching() {
   return (
     <div className="text-white p-4 bg-gray-800 min-h-screen w-full flex flex-col items-center gap-4">
       <div className="text-3xl">Nutreazy</div>
-
       <div className="mt-4 w-full max-w-xl">
         <h2 className="font-semibold">Select Ingredients:</h2>
 
@@ -108,16 +213,23 @@ export default function FoodSearching() {
               className="p-2 border rounded bg-gray-200 text-black"
             >
               <option value="">Select an ingredient</option>
-              {availableIngredients
-                .filter(
-                  (item) =>
-                    !selectedIngredients.includes(item) || item === ingredient
+              {Object.entries(categorizedIngredients).map(
+                ([category, items]) => (
+                  <optgroup key={category} label={category}>
+                    {items
+                      .filter(
+                        (item) =>
+                          !selectedIngredients.includes(item) ||
+                          item === ingredient
+                      )
+                      .map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </optgroup>
                 )
-                .map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
+              )}
             </select>
             <button
               onClick={() => removeIngredient(index)}
@@ -189,7 +301,6 @@ export default function FoodSearching() {
           <p>
             <strong>Allergents:</strong> {recipeDetails.allergies}
           </p>
-
           <h3 className="font-semibold mt-2">Ingredients:</h3>
           <ul className="list-disc pl-5">
             {recipeDetails.ingredients.map((item, i) => (
