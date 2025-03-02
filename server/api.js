@@ -15,7 +15,7 @@ const openai = new OpenAI({
 
 app.post("/api/getRecipeTitles", async (req, res) => {
   try {
-    const { ingredients } = req.body;
+    const { ingredients,restrictions,allergies } = req.body;
     if (!ingredients || ingredients.length === 0) {
       return res.status(400).json({ error: "No ingredients provided." });
     }
@@ -23,6 +23,8 @@ app.post("/api/getRecipeTitles", async (req, res) => {
     const prompt = `Generate 3 unique recipe names using these ingredients: ${ingredients.join(
       ", "
     )}.
+    Consider the following dietary restrictions: ${restrictions.join(", ")}.
+    And the following allergies: ${allergies.join(", ")}.
     Ensure the response is strictly formatted as JSON:
     {
       "recipes": ["Recipe 1", "Recipe 2", "Recipe 3"]
@@ -50,12 +52,12 @@ app.post("/api/getRecipeTitles", async (req, res) => {
 
 app.post("/api/getRecipeDetails", async (req, res) => {
   try {
-    const { recipeTitle } = req.body;
+    const { recipeTitle,restrictions,allergies } = req.body;
     if (!recipeTitle) {
       return res.status(400).json({ error: "No recipe title provided." });
     }
 
-    const prompt = `Provide a detailed recipe for "${recipeTitle}". Ensure the response is in valid JSON format. 
+    const prompt = `Provide a detailed recipe for "${recipeTitle}" and based on the "${restrictions}" restrictions and "${allergies} allergies. Ensure the response is in valid JSON format. 
     IMPORTANT: "instructions" MUST be an array, with each step as a separate string. DO NOT return a single paragraph.
     
     Example:
@@ -71,7 +73,9 @@ app.post("/api/getRecipeDetails", async (req, res) => {
       ],
       "prep_time": "10 minutes",
       "cook_time": "20 minutes",
-      "servings": 2
+      "servings": 2,
+      "restrictions": "Vegetarian, Gluten-Free",
+      "allergies": "Dairy, Nuts",
     }`;
 
     const response = await openai.chat.completions.create({
