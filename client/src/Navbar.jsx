@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "./App.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  function goBack() {
+    navigate("/");
+  }
 
   return (
     <nav className="w-full bg-white shadow-sm ingredients">
@@ -21,12 +27,12 @@ export default function Navbar() {
 
         {/* Desktop Menu: Only display "Home" */}
         <div className="hidden md:flex items-center">
-          <a
-            href="#"
+          <button
+            onClick={goBack}
             className="text-[#7B8F3D] font-semibold hover:text-[#415111] transition-colors"
           >
             Home
-          </a>
+          </button>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -57,12 +63,12 @@ export default function Navbar() {
         <div className="md:hidden bg-white border-t border-gray-200">
           <ul className="flex flex-col p-4 space-y-2">
             <li>
-              <a
-                href="#"
+              <button
+                onClick={goBack}
                 className="block text-gray-700 hover:text-[#7B8F3D] transition-colors"
               >
                 Home
-              </a>
+              </button>
             </li>
           </ul>
         </div>

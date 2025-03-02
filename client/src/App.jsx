@@ -8,19 +8,15 @@ import Ingredients from "./Ingredients.jsx";
 export default function App() {
   return (
     <BrowserRouter>
-        <Navbar/>
+      <Navbar />
       <Routes>
-        <Route
-          path="/"
-          element={<LandingPage/>}
-        />
+        <Route path="/" element={<LandingPage />} />
         <Route
           path="/login"
           element={<div>this is supposed to be login page</div>}
         />
         <Route path="/restriction" element={<Restriction />} />
-        <Route path="/foodSearching" element={<FoodSearching />} />
-         <Route path="/ingredients" element={<Ingredients />} />
+        <Route path="/ingredients" element={<Ingredients />} />
       </Routes>
     </BrowserRouter>
   );
