@@ -53,7 +53,7 @@ export default function Restriction() {
   }
 
   function handleStartCooking() {
-    navigate("/FoodSearching", { state: { restrictions, allergies } });
+    navigate("/Ingredients", { state: { restrictions, allergies } });
   }
 
   return (
@@ -87,7 +87,9 @@ export default function Restriction() {
               key={item}
               onClick={() => handleAllergyClick(item)}
               className={`text-gray-800 px-4 py-2 rounded-full shadow-md border-3 ${
-                allergies.includes(item) ? "bg-green-400" : "hover:bg-green-300 bg-white"
+                allergies.includes(item)
+                  ? "bg-green-400"
+                  : "hover:bg-green-300 bg-white"
               } hover:cursor-pointer`}
             >
               {item}

@@ -1,12 +1,17 @@
 import React from "react";
 import Navbar from "./Navbar";
 import "./App.css";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+  
+  function otherPage() {
+    navigate("/login");
+  }
+
   return (
     <div className="bg-[#f2e8df] min-h-screen">
-      <Navbar />
-
       <section className="py-12 px-4 bg-[#f2e8df]">
         <div className="max-w-screen-xl mx-auto flex flex-col-reverse md:flex-row items-center md:justify-between ">
           <div className="md:w-1/2 mt-8 md:mt-0 ">
@@ -14,9 +19,13 @@ export default function LandingPage() {
               Nutrition made eazy!
             </h1>
             <p className="text-lg text-gray-800 mb-6">
-              Cooking meets convenience! No waste, no hassle – just easy, personalized cooking!
+              Cooking meets convenience! No waste, no hassle – just easy,
+              personalized cooking!
             </p>
-            <button className="inline-block bg-orange-400 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-md">
+            <button
+              onClick={otherPage}
+              className="inline-block bg-orange-400 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-md"
+            >
               START NOW
             </button>
           </div>
@@ -37,7 +46,11 @@ export default function LandingPage() {
             How to?
           </h2>
           <p className="text-lg text-[#415111] leading-relaxed">
-            Simply enter the ingredients you have at home, along with your dietary preferences and allergy restrictions, and we’ll generate delicious, tailored recipes just for you. Whether you’re looking for a quick meal or a dish that fits your lifestyle, we’ve got you covered.
+            Simply enter the ingredients you have at home, along with your
+            dietary preferences and allergy restrictions, and we’ll generate
+            delicious, tailored recipes just for you. Whether you’re looking for
+            a quick meal or a dish that fits your lifestyle, we’ve got you
+            covered.
           </p>
         </div>
       </section>
