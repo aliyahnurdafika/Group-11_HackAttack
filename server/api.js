@@ -13,11 +13,9 @@ app.use(cors());
 const port = process.env.PORT || 5001;
 
 const openai = new OpenAI({
-  apiKey: process.env.GPT_API_KEY, // Ensure your .env file has GPT_API_KEY defined
+  apiKey: process.env.GPT_API_KEY,
 });
 
-// Load valid ingredients from CSV file.
-// The CSV should have a header "ingredients" (all lowercase)
 const validIngredients = new Set();
 fs.createReadStream("./ingredients.csv")
   .pipe(csvParser())
@@ -33,7 +31,6 @@ fs.createReadStream("./ingredients.csv")
     );
   });
 
-// Banned words list (all in lowercase)
 const bannedWords = [
   "trash",
   "hammer",
@@ -56,7 +53,6 @@ const bannedWords = [
   "headphones",
 ];
 
-// Check if text contains any banned word using regex with word boundaries.
 function containsBannedWord(text) {
   const lowerText = text.toLowerCase();
   return bannedWords.some((word) => {
@@ -65,9 +61,6 @@ function containsBannedWord(text) {
   });
 }
 
-// Filter the ingredients:
-// 1. Remove ingredients that contain banned words.
-// 2. Keep only those that are in the CSV (valid ingredients).
 function sanitizeIngredients(ingredients) {
   let filtered = ingredients.filter((ing) => !containsBannedWord(ing));
   console.log("After banned words filtering:", filtered);
@@ -85,7 +78,6 @@ app.post("/api/getRecipeTitles", async (req, res) => {
       return res.status(400).json({ error: "No ingredients provided." });
     }
 
-    // Filter the ingredients first.
     const filteredIngredients = sanitizeIngredients(ingredients);
     if (filteredIngredients.length === 0) {
       return res
@@ -95,7 +87,6 @@ app.post("/api/getRecipeTitles", async (req, res) => {
     const ingredientsStr = filteredIngredients.join(", ");
     console.log("Final sanitized ingredients:", ingredientsStr);
 
-    // Construct the prompt using the filtered ingredients.
     let prompt = `Generate 3 unique recipe names using these edible ingredients: ${ingredientsStr}.
 Only consider ingredients common in kitchens or grocery stores. Do not include or base the recipe on any non-food items (e.g., "racing exhaust", "macbook air m1", "sony xm5", etc.).`;
 
@@ -142,7 +133,6 @@ app.post("/api/getRecipeDetails", async (req, res) => {
       return res.status(400).json({ error: "No recipe title provided." });
     }
 
-    // Reject recipe titles with banned words.
     if (containsBannedWord(recipeTitle)) {
       return res.status(400).json({ error: "Invalid recipe title provided." });
     }
@@ -195,7 +185,6 @@ Ensure "instructions" is an array where each step is a separate string.`;
     }
     let parsedResponse = JSON.parse(content);
     if (typeof parsedResponse.instructions === "string") {
-      // Improved splitting: split by one or more digits followed by a dot and optional spaces.
       parsedResponse.instructions = parsedResponse.instructions
         .split(/\s*\d+\.\s*/)
         .map((step) => step.trim())
@@ -204,12 +193,10 @@ Ensure "instructions" is an array where each step is a separate string.`;
     res.json(parsedResponse);
   } catch (error) {
     console.error("Error fetching recipe details:", error);
-    res
-      .status(500)
-      .json({
-        error: "Failed to fetch recipe details",
-        details: error.message,
-      });
+    res.status(500).json({
+      error: "Failed to fetch recipe details",
+      details: error.message,
+    });
   }
 });
 
