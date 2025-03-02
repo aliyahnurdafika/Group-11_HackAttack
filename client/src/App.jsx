@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LandingPage from "./LandingPage";
 import FoodSearching from "./FoodSearching";
 import Restriction from "./Restriction";
+import Navbar from "./Navbar";
 
 export default function App() {
   return (
@@ -8,7 +10,7 @@ export default function App() {
       <Routes>
         <Route
           path="/"
-          element={<div>this is supposed to be landing page</div>}
+          element={<Navbar />}
         />
         <Route
           path="/login"
