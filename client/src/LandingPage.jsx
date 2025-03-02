@@ -5,7 +5,6 @@ import "./App.css";
 export default function LandingPage() {
   return (
     <div className="bg-[#f2e8df] min-h-screen">
-      <Navbar />
 
       <section className="py-12 px-4 bg-[#f2e8df]">
         <div className="max-w-screen-xl mx-auto flex flex-col-reverse md:flex-row items-center md:justify-between ">
