@@ -1,20 +1,26 @@
 import React, { useState } from "react";
-import "./App.css"; // Ensure Tailwind is configured
+import { useNavigate } from "react-router-dom";
+import "./App.css"; 
 
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Username:", username);
     console.log("Password:", password);
-    alert(`Welcome, ${username}!`); // You can replace this with actual authentication logic
+    alert(`Welcome, ${username}!`); 
+  };
+
+  const handleSignIn = () => {
+    navigate("/Restriction");
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#F2E8DF]">
-      <div className="bg-[#F2E8DF] p-10 rounded-lg shadow-lg w-[450px] text-center">
+      <div className="bg-[#F2E8DF] p-10 rounded-lg  w-[450px] text-center">
         <h2 className="text-3xl font-bold text-[#3D5122] mb-6">Sign In</h2>
 
         <form onSubmit={handleSubmit}>
@@ -47,13 +53,16 @@ export default function SignIn() {
           {/* Sign In Button */}
           <button
             type="submit"
-            className="w-[150px] mx-auto p-3 bg-[#3D5122] text-white font-semibold rounded-lg shadow-md hover:bg-[#2C3A16] transition duration-300"
+            onClick={handleSignIn}
+            className="w-[150px] mx-auto p-3 bg-[white] text-[#2C3A16] font-bold rounded-lg shadow-md hover:bg-[#2C3A16] transition duration-300"
           >
             SIGN IN
           </button>
         </form>
+        
       </div>
     </div>
   );
 }
+
 
